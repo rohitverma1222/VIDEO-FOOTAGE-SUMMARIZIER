@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CCTV FOOTAGE SUMMARIZATION </title>
+  <link rel="icon" type="image/x-icon" href="{% static './images/cctv_icon.png' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <!-- bootstap cdn -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bxl-camera'></i>
+      <span class="logo_name"></span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/" class="active">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">HOME</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/access">
+          <i class='bx bx-list-ul'></i>
+          <span class="links_name">Access CCTV</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/dashboard">
+          <i class='bx bx-box'></i>
+          <span class="links_name" data-bs-toggle="modal" data-bs-target="#exampleModal">Upload Footage</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-pie-chart-alt-2'></i>
+          <span class="links_name">Previous Clips</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cog'></i>
+          <span class="links_name">Setting</span>
+        </a>
+      </li>
+      <li class="log_out">
+        <a href="#">
+          <i class='bx bx-log-out'></i>
+          <span class="links_name logout-popup">Log out</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <nav id="header">
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">CCTV SUMMARIZER</span>
+      </div>
+
+    </nav>
+
+    <div class="home-content">
+      <p class="desc">Summarize your hours of CCTV Footage into Minutes</p>
+    </div>
+
+    <!-- Modal -->
+    <!-- <div class="modal-dialog modal-dialog-centered"> -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/dashboard" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="modal-body">
+              <!-- <input type="file" accept="video/mp4,video/x-m4v,video/*" id="select"> <label for="select"
+                style="color:white;">Upload Footage</label> -->
+                {{form}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <div class="twodiv">
+      <div class="pop-up" style="display: none;">
+        <div class="heading-with-close">
+          <div class="heading">Logout!</div>
+          <div class="close">
+            <i class='bx bx-x'></i>
+          </div>
+        </div>
+        <div class="logout-confirmation">
+          <p>Are you sure want to Logout</p>
+          <button class="yes">Yes</button>
+        </div>
+      </div>
+      <div class="first">
+        <div class="imgsection">
+          <img src="{% static './images/cctv.png' %}" alt="">
+          <!-- <button class="summarize"> <input type="file" accept="video/mp4,video/x-m4v,video/*" id="select"
+              style="display:none;"> <label for="select">Summarize</label></button> -->
+
+          <button type="button" class="summarize" style="margin-top:1rem;" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            Summarize
+          </button>
+
+        </div>
+      </div>
+      <div class="second">
+        <div class="imgsection">
+          <img src="{% static './images/clips.png' %}" alt="">
+          <button class="summarize" onclick="window.location='/previousClip'">Previous clips</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </section>
+
+  <script src="{% static './script.js' %}">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
