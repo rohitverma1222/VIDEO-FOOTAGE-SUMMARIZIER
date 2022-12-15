@@ -24,7 +24,7 @@ def dashBoard(request):
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     threshold = 20.
 
-    writer = cv2.VideoWriter('final.avi', cv2.VideoWriter_fourcc(*'XVID'), 25, (width, height))
+    writer = cv2.VideoWriter('final.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 25, (width, height))
     ret, frame1 = video.read()
     prev_frame = frame1
 
@@ -32,10 +32,30 @@ def dashBoard(request):
     b = 0
     c = 0
 
+    config_file="/home/rohit/Desktop/cctv/CCTV-FOOTAGE-Summarization-main/summarize/config/frozen_inference_graph.pb"
+    forzen_model="/home/rohit/Desktop/cctv/CCTV-FOOTAGE-Summarization-main/summarize/config/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt"
+    model=cv2.dnn_DetectionModel(config_file,forzen_model)
+    classLabels=[]
+    file_name='/home/rohit/Desktop/cctv/CCTV-FOOTAGE-Summarization-main/summarize/config/labels.txt'
+    with open(file_name,'rt') as fpt:
+        classLabels=fpt.read().rstrip('\n').split('\n')
+
+    model.setInputSize(320,320)
+    model.setInputScale(1.0/127.5)
+    model.setInputMean((127.5,127.5,127.5))
+    model.setInputSwapRB(True)
+    unique=set()
+    count=0
     while True:
         ret, frame = video.read()
         if ret is True:
-            if (((np.sum(np.absolute(frame-prev_frame))/np.size(frame)) > threshold)) and np.array_equal(prev_frame,frame)==False:
+            count+=1
+            if (((np.sum(np.absolute(frame-prev_frame))/np.size(frame)) > threshold)):
+                ClassIndex,confidence,bbox=model.detect(frame,confThreshold=0.5)
+                if len(ClassIndex)>0:
+                    for classInd,conf,boxes  in zip(ClassIndex.flatten(),confidence.flatten(),bbox):
+                        if(classInd<=80):
+                            unique.add(classLabels[classInd-1])
                 writer.write(frame)
                 prev_frame = frame
                 a += 1
@@ -49,10 +69,13 @@ def dashBoard(request):
     print("Total frames: ", c)
     print("Unique frames: ", a)
     print("Common frames: ", b)
+    print(count)
+    print(unique)
     video.release()
     writer.release()
     cv2.destroyAllWindows()
     context={'path':"/media/"+str(Video.objects.all().last().video),'frames':c}
+    
     return render(request,'DashBoard.html',{'context':context})
 
 def access(request):
