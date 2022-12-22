@@ -100,18 +100,21 @@
       </div>
       <br>
       <div class="sales-boxes">
-        <div class="recent-sales box" style="width:100% ;">
-          <div class="title" style="margin:1px auto ;">Browse Clips</div>
+        <div class="recent-sales box">
+          <div class="title">Time Stamps</div>
           <div class="sales-details">
-            <ul class="Serial No">
-              <li class="topic">Serial No</li>
+            <ul class="details">
+              <li class="topic">Name</li>
               {% for i in video %}
-              <li><a href="#">{{i.name}}</a></li>
+              <li>{{i.name}}</li>
               {% endfor %}
             </ul>
-          </div>
-          <div class="button">
-            <a href="#">See All</a>
+            <ul class="details">
+              <li class="topic">Date</li>
+              {% for i in video %}
+              <li>{{i.created}}</li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
       </div>

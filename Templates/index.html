@@ -61,12 +61,21 @@
           <span class="links_name">Setting</span>
         </a>
       </li>
-      <li class="log_out">
-        <a href="#">
+      {% if user.is_authenticated %}
+      <li class="log_out log_out2">
+        <a>
           <i class='bx bx-log-out'></i>
-          <span class="links_name logout-popup">Log out</span>
+          <span class="links_name logout-popup">Logout</span>
         </a>
       </li>
+      {% else %}
+      <li class="log_out">
+        <a href="account/login">
+          <i class='bx bx-log-out'></i>
+          <span class="links_name">Login and Register</span>
+        </a>
+      </li>
+      {% endif %}
     </ul>
   </div>
   <section class="home-section">
@@ -116,14 +125,12 @@
         </div>
         <div class="logout-confirmation">
           <p>Are you sure want to Logout</p>
-          <button class="yes">Yes</button>
+          <button class="yes"> <a href="account/logout">YES</a></button>
         </div>
       </div>
       <div class="first">
         <div class="imgsection">
           <img src="{% static './images/cctv.png' %}" alt="">
-          <!-- <button class="summarize"> <input type="file" accept="video/mp4,video/x-m4v,video/*" id="select"
-              style="display:none;"> <label for="select">Summarize</label></button> -->
 
           <button type="button" class="summarize" style="margin-top:1rem;" data-bs-toggle="modal"
             data-bs-target="#exampleModal">

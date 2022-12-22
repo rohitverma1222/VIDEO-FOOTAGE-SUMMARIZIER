@@ -1,4 +1,4 @@
-{% load static %} 
+{% load static %}
 <!DOCTYPE html>
 <!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
@@ -11,7 +11,7 @@
   <!-- Boxicons CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -25,52 +25,53 @@
       <i class='bx bxl-camera'></i>
       <span class="logo_name"></span>
     </div>
-      <ul class="nav-links">
-        <li>
-          <a href="/">
-            <i class='bx bx-grid-alt' ></i>
-            <span class="links_name">HOME</span>
-          </a>
-        </li>
-        <li>
-          <a href="/dashboard" class="active">
-            <i class='bx bx-box' ></i>
-            <span class="links_name">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="/access" >
-            <i class='bx bx-list-ul'  ></i>
-            <span class="links_name">Access CCTV</span>
-          </a>
-        </li>
+    <ul class="nav-links">
+      <li>
+        <a href="/">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">HOME</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard" class="active">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/access">
+          <i class='bx bx-list-ul'></i>
+          <span class="links_name">Access CCTV</span>
+        </a>
+      </li>
 
-        <li>
-          <a href="">
-            <i class='bx bx-upload' ></i>
-            <input type="file" accept="video/mp4,video/x-m4v,video/*" id="select" style="display:none; "> <label for="select"  style="color:white;">Upload Footage</label>
+      <li>
+        <a href="">
+          <i class='bx bx-upload'></i>
+          <input type="file" accept="video/mp4,video/x-m4v,video/*" id="select" style="display:none; "> <label
+            for="select" style="color:white;">Upload Footage</label>
 
-          </a>
-        </li>
-        <li>
-          <a href="/previousClip">
-            <i class='bx bx-pie-chart-alt-2' ></i>
-            <span class="links_name">Previous Clips</span>
-          </a>
-        </li>
-        <li>
-          <a href="/setting">
-            <i class='bx bx-cog' ></i>
-            <span class="links_name">Setting</span>
-          </a>
-        </li>
-        <li class="log_out">
-          <a href="#">
-            <i class='bx bx-log-out'></i>
-            <span class="links_name logout-popup">Log out</span>
-          </a>
-        </li>
-      </ul>
+        </a>
+      </li>
+      <li>
+        <a href="/previousClip">
+          <i class='bx bx-pie-chart-alt-2'></i>
+          <span class="links_name">Previous Clips</span>
+        </a>
+      </li>
+      <li>
+        <a href="/setting">
+          <i class='bx bx-cog'></i>
+          <span class="links_name">Setting</span>
+        </a>
+      </li>
+      <li class="log_out">
+        <a href="#">
+          <i class='bx bx-log-out'></i>
+          <span class="links_name logout-popup">Log out</span>
+        </a>
+      </li>
+    </ul>
   </div>
   <section class="home-section">
     <nav>
@@ -89,7 +90,7 @@
       <div class="pop-up" style="display: none;">
         <div class="heading-with-close">
           <div class="heading">Logout!</div>
-          <div class="close"> 
+          <div class="close">
             <i class='bx bx-x'></i>
           </div>
         </div>
@@ -102,7 +103,7 @@
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Number of Object Detected</div>
-            <div class="number">408</div>
+            <div class="number">{{context.object_detected}}</div>
             <div class="indicator">
               <i class='bx bx-up-arrow-alt'></i>
               <span class="text"></span>
@@ -124,7 +125,7 @@
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Original Video Length</div>
-            <div class="number">01:20:56</div>
+            <div class="number">{{context.t_time}}</div>
             <div class="indicator">
               <i class='bx bx-up-arrow-alt'></i>
               <span class="text"></span>
@@ -134,7 +135,7 @@
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Summarised Video Length</div>
-            <div class="number">29:50</div>
+            <div class="number">{{context.processed_time}}</div>
             <div class="indicator">
               <i class='bx bx-down-arrow-alt down'></i>
               <span class="text"></span>
@@ -143,21 +144,11 @@
         </div>
       </div>
       <div class="sales-boxes video">
-        <div class="vid">
-          <p>Original Video</p>
-          <video width="100%" controls>
-            <source src="{{context.path}}" type="video/mp4">
-            Your browser does not support HTML video.
-          </video>
-        </div>
-        <div class="vid">
-          <p>Summarized Video</p>
-          <video width="100%" controls>
-            <source src="/final.mp4" type="video/mp4">
-            Your browser does not support HTML video.
-          </video>
-          <a href="" download="/final.mp4">vlaue</a>
-
+        <div class="recent-sales box">
+          <h1>Your video has been processed <span>
+            Here are the list of objects that are Detected
+          </span></h1>
+          <!-- <h6>Here are the list of objects that are Detected</h6> -->
         </div>
       </div>
       <br>
@@ -167,47 +158,23 @@
           <div class="sales-details">
             <ul class="details">
               <li class="topic">Time</li>
-              <li><a href="#">02 :25 :60</a></li>
-              <li><a href="#">02 :25 :60</a></li>
-              <li><a href="#">02 :25 :60</a></li>
-              <li><a href="#">02 :25 :60</a></li>
-              <li><a href="#">02 :25 :60</a></li>
-              <li><a href="#">02 :25 :60</a></li>
+              {% for i in context.timeStamps %}
+              <li>{{i}}</li>
+              {% endfor %}
             </ul>
             <ul class="details">
               <li class="topic">Objects</li>
-              <li><a href="#">Car</a></li>
-              <li><a +="#">Human</a></li>
-              <li><a href="#">Bird</a></li>
-              <li><a href="#">Bike</a></li>
-              <li><a href="#">Human</a></li>
-              <li><a href="#">Cycle</a></li>
+              {% for value in context.timevalue %}
+              <li>{% for i in value %} {{i}} {% endfor %}</li>
+              {% endfor %}
             </ul>
-            <ul class="details">
-              <li class="topic">Point</li>
-              <li><a href="#">point</a></li>
-              <li><a href="#">point</a></li>
-              <li><a href="#">point</a></li>
-              <li><a href="#">point</a></li>
-              <li><a href="#">point</a></li>
-              <li><a href="#">point</a></li>
-
-            </ul>
-
           </div>
-          <div class="button">
-            <a href="#">See All</a>
-          </div>
-        </div>
-        <div class="top-sales box">
-          <img src="{% static './images/graph.png' %}" alt="">
         </div>
       </div>
     </div>
   </section>
 
   <script src="{% static './script.js' %}">
-
   </script>
 
 </body>

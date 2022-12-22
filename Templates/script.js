@@ -11,7 +11,7 @@ sidebarBtn.onclick = function() {
 // popUp
 
 let closebtn=document.querySelector(".close")
-let modelPopup=document.querySelector(".log_out")
+let modelPopup=document.querySelector(".log_out2")
 let popUp=document.querySelector(".pop-up")
 let yesBtn=document.querySelector(".yes")
 closebtn.addEventListener("click",()=>{
@@ -24,3 +24,5 @@ yesBtn.addEventListener("click",()=>{
 modelPopup.addEventListener("click",()=>{
   popUp.style.display="";
 })
+
+

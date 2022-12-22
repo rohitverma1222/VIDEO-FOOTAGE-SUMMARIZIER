@@ -24,3 +24,5 @@ yesBtn.addEventListener("click",()=>{
 modelPopup.addEventListener("click",()=>{
   popUp.style.display="";
 })
+
+

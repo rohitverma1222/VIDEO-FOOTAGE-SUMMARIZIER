@@ -264,8 +264,22 @@ nav .profile-details i{
 }
 
 /* left box */
+.box h1{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.box h1 span{
+  font-size:medium;
+  text-align: center;
+  color: gray;
+}
+.home-content .sales-boxes .recent-sales span{
+  text-align: center;
+  color: gray;
+}
 .home-content .sales-boxes .recent-sales{
-  width: 45%;
+  width: 100%;
   background: #fff;
   padding: 20px 30px;
   margin: 0 20px;

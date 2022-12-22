@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import VideoForm
 from .models import Video
 import os
+from datetime import timedelta
 import cv2 # pip install opencv-python
 import numpy as np # pip install numpy
 # Create your views here.
@@ -18,9 +19,10 @@ def dashBoard(request):
 
     # media path
     path=os.path.join('/home/rohit/Desktop/cctv/CCTV-FOOTAGE-Summarization-main/media/',str(Video.objects.all().last().video))
-    print(path)
+    # print(path)
     video = cv2.VideoCapture(path)
     width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    fps = video.get(cv2.CAP_PROP_FPS)
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     threshold = 20.
 
@@ -44,8 +46,9 @@ def dashBoard(request):
     model.setInputScale(1.0/127.5)
     model.setInputMean((127.5,127.5,127.5))
     model.setInputSwapRB(True)
-    unique=set()
+    timeStamps={}
     count=0
+    object_detected=0
     while True:
         ret, frame = video.read()
         if ret is True:
@@ -53,9 +56,16 @@ def dashBoard(request):
             if (((np.sum(np.absolute(frame-prev_frame))/np.size(frame)) > threshold)):
                 ClassIndex,confidence,bbox=model.detect(frame,confThreshold=0.5)
                 if len(ClassIndex)>0:
+                    unique=set()
                     for classInd,conf,boxes  in zip(ClassIndex.flatten(),confidence.flatten(),bbox):
                         if(classInd<=80):
-                            unique.add(classLabels[classInd-1])
+                            object_detected+=1
+                            unique.add( classLabels[classInd-1])
+                    if(len(unique)>0):
+                        td=timedelta(seconds=count//fps)
+                        # print(str(td))
+                        timeStamps[str(td)]=unique
+                            
                 writer.write(frame)
                 prev_frame = frame
                 a += 1
@@ -65,17 +75,11 @@ def dashBoard(request):
             c += 1
         else:
             break
-
-    print("Total frames: ", c)
-    print("Unique frames: ", a)
-    print("Common frames: ", b)
-    print(count)
-    print(unique)
     video.release()
     writer.release()
     cv2.destroyAllWindows()
-    context={'path':"/media/"+str(Video.objects.all().last().video),'frames':c}
-    
+    context={'path':"/media/"+str(Video.objects.all().last().video),'frames':c,'timeStamps':timeStamps,'timevalue':timeStamps.values(),'object_detected':object_detected,'t_time':str(timedelta(seconds=count//fps)),'processed_time':timedelta(seconds=a//fps)}
+   
     return render(request,'DashBoard.html',{'context':context})
 
 def access(request):
