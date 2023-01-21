@@ -65,11 +65,12 @@ def dashBoard(request):
                     if(classInd<=80):
                         object_detected+=1
                         unique.add( classLabels[classInd-1])
-                        if classLabels[classInd-1]=='dog':
+                        if classLabels[classInd-1]=='person':
                             writer.write(frame)
                             a += 1
                 if(len(unique)>0):
                     td=timedelta(seconds=count//fps)
+                    print(str(td))
                     timeStamps[str(td)]=unique
                         
             # else:
@@ -131,7 +132,7 @@ def dashboard(request,id):
                             unique.add( classLabels[classInd-1])
                     if(len(unique)>0):
                         td=timedelta(seconds=count//fps)
-                        # print(str(td))
+                        print(str(td))
                         timeStamps[str(td)]=unique
                             
                 writer.write(frame)
